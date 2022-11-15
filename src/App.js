@@ -1,10 +1,10 @@
 import React from "react";
-import Home from "./Pages/Home";
+import Reminder from "./Pages/Reminder";
 
 const App = () => {
   return (
     <>
-      <Home />
+      <Reminder />
     </>
   );
 }
