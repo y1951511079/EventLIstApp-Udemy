@@ -4,10 +4,11 @@ import reducer from "../reducers";
 import EventForm from "../Components/EventForm";
 import Events from "../Components/Events";
 import AppContext from "../contexts/AppContext";
+import OperationLogs from "../Components/OperationLogs"
+
 const Home = () => {
-  // const appState = localStorage.getItem("appWithRedux");
-  // const initialState = appState ? JSON.parse(appState) : {events:[] }
-  const initialState = {events:[], operationLogs:[] }
+  const appState = localStorage.getItem("appWithRedux");
+  const initialState = appState ? JSON.parse(appState) : {events:[],operationLogs:[] }
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const Home = () => {
     <AppContext.Provider value={{state,dispatch}} >
       <EventForm />
       <Events />
+      <OperationLogs />
       </AppContext.Provider>
     </>
   )
