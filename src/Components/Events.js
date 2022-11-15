@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import Event from "./Event";
+import AppContext from "../contexts/AppContext";
 
-const Events = ({ state, dispatch }) => {
+
+const Events = () => {
+    const {state} = useContext(AppContext);
     return (
         <>
             <h2>イベント一覧</h2>
@@ -13,8 +17,8 @@ const Events = ({ state, dispatch }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {state.map((event, index) => (<Event key={index} event={event} dispatch={dispatch} />))}
-
+                    {state.events.map((event, index) => (<Event key={index} event={event} />))}
+                {/* stateはオブジェクトなのでeventsを付ける */}
                 </tbody>
             </table>
             <h2>操作ログ一覧</h2>

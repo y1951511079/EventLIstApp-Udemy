@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
-const EventForm = ({ state, dispatch }) => {
+import { useState, useEffect,useContext } from "react";
+import {DELETE_ALL_EVENT,CREATE_EVENT} from "../actions";
+import AppContext from "../contexts/AppContext";
+const EventForm = () => {
+    const { state, dispatch } = useContext(AppContext);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const createEvent = (e) => {
         e.preventDefault()
         dispatch({
-            type: `CREATE_EVENT`,
+            type: CREATE_EVENT,
             title,
             body
         })
@@ -16,7 +19,7 @@ const EventForm = ({ state, dispatch }) => {
     const deleteAll = (e) => {
         e.preventDefault()
         const result = window.confirm(`全てのイベントを本当に削除しても良いですか？`)
-        if (result) dispatch({ type: `DELETE_ALL_EVENT` })
+        if (result) dispatch({ type: DELETE_ALL_EVENT })
     }
     const unCreatable = title === "" || body === "";
     const unDeletable = state.length === 0;
