@@ -1,22 +1,26 @@
-import {useState} from "react";
+/* eslint-disable */
+import { useReducer, useEffect } from "react";
+import reducer from "../reducers";
+import EventForm from "../Components/EventForm";
+import Events from "../Components/Events";
 const Home = () => {
-    const [ count, setCount] = useState(0);
-    const countUp = () => setCount((prev)=>prev+1);
-    const countUp2 = () => setCount((prev)=>prev*2);
-    const resetB = () =>setCount(prev => prev=0);
-    const triple = () =>setCount(prev =>  prev % 3 === 0 ? prev/3 : prev
-    );
-    return(
+  const appState = localStorage.getItem("appWithRedux");
+  const initialState = appState ? JSON.parse(appState) : []
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    localStorage.setItem("appWithRedux", JSON.stringify(state))
+  }, [state])
+
+  return (
     <>
-    <button onClick={countUp}>カウントアップ</button>
-    <button onClick={countUp2}>カウントアップ2</button>
-    <p>{count}</p>
-    <button onClick={resetB}>リセット</button>
-    <button onClick={triple}>３の倍数の時だけ３で割る</button>
-    </>  
-    )
-      
-  
-  };
-  
-  export default Home;
+      <EventForm state={state} dispatch={dispatch} />
+      <Events state={state} dispatch={dispatch} />
+
+    </>
+  )
+
+
+};
+
+export default Home;
