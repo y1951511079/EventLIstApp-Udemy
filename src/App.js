@@ -1,10 +1,11 @@
 import React from "react";
-import Reminder from "./Pages/Reminder";
+import Example from "./Pages/Example";
+
 
 const App = () => {
   return (
     <>
-      <Reminder />
+     <Example />
     </>
   );
 }
