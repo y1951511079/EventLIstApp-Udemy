@@ -1,62 +1,51 @@
-import { useState } from "react";
+/* eslint-disable */
+import { entered, deleteda } from "../store/modules/enteredSlice";
+// import enteredSlice from "../store/modules/enteredSlice";
+import { add } from "../store/modules/todoReducer";
+import { useSelector, useDispatch } from "react-redux"
 
-const Reminder = () => {
+// import store from "../store";
+const Example = () => {
+    const dispatch = useDispatch();
+    const todos = useSelector(state => state.entered);
+    const newTodos = useSelector(state => state.todo);
+    const onChangeHandler = (e) => {
+        const action = entered(e.target.value);
+        dispatch(action);
 
-    // const initialState = [{
-    //     id: 0,
-    //     content: ""
-    // }]
-    //stateは配列！オブジェクトに設定すると([]を付けないと)後にmapメソッドを使えない。
-    const [todos, setTodos] = useState([]);
-    //todoリストを保持
-    const [enteredTodo, setEnteredTodo] = useState("");
-    //Formの入力欄の状態を監視するstate。enteredTodoにはフォームに入力し文字が入ってくる。
-
-    const addList = (e) => {
-
+    }
+    const submitHandler = (e) => {
         e.preventDefault();
-        //formのonClickのデフォルト動作である再リロードを防ぐ。
-        const newTodo = {
-            id: Math.floor(Math.random() * 1e5),
-            content: enteredTodo
-        }
-        //enteredTodoの入力を元に新しいオブジェクトを生成し、これをtodoリストのstateに反映させる。
-        setTodos([...todos, newTodo])
-        setEnteredTodo("")
-    }
+        const submit = add(todos)
+        dispatch(submit)
+        const deleted = deleteda(todos)
+        dispatch(deleted)
 
-    const deleteTodo = (id) => {
-        const newTodos = todos.filter((todo) => {
-            return todo.id !== id;
-        });
-        setTodos(newTodos);
     }
-
+    const arrayTodos = [...newTodos];
+    //mapメソッドでエラーが出たため新しい配列に入れ直した。
     return (
         <>
-            <h1>Reminder</h1>
-            <div>
-                <h2>List.js</h2>
-                {todos.map(todo => {
-                    return (
-                        //todoには新規で登録されたオブジェクト{content:"××",id:○○}
-                        <div key={todo.id}>
-                            <button onClick={() => deleteTodo(todo.id)}>完了</button>
-                            <span>{todo.content}</span>
-                        </div>
-                    )
-                })}
-            </div>
-            <div>
-                <h2>Form.js</h2>
-                <form onSubmit={addList}>
-                    <input type="text" value={enteredTodo} onChange={(e) => setEnteredTodo(e.target.value)} />
-                    <button  >追加</button>
-                </form>
-            </div>
+            <h2>Reminder</h2>
+
+
+            {arrayTodos.map(prev => {
+                return (
+                    <p key={prev.id}>{prev.content}</p>
+                )
+            }
+            )}
+
+
+            <form onSubmit={submitHandler}>
+                <input type="text" value={todos} onChange={onChangeHandler} />
+                <button >追加</button>
+            </form>
+
+
         </>
     )
 
 }
 
-export default Reminder;
+export default Example;
