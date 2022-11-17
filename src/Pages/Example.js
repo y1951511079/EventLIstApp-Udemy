@@ -18,7 +18,8 @@ const Example = () => {
         e.preventDefault();
         const submit = add(todos)
         dispatch(submit)
-        const deleted = deleteda(todos)
+        const deleted = deleteda()
+        //変数名とActionCreaterは同じ名前はダメ
         dispatch(deleted)
 
     }

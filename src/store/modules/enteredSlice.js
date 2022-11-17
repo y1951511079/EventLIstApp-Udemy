@@ -13,6 +13,5 @@ const enteredSlice = createSlice({
     },
 })
 const { entered, deleteda} = enteredSlice.actions;
-
 export { entered, deleteda }
 export default enteredSlice.reducer;
