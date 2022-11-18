@@ -1,7 +1,7 @@
-/* eslint-disable */
+// /* eslint-disable */
 import { entered, deleteda } from "../store/modules/enteredSlice";
 // import enteredSlice from "../store/modules/enteredSlice";
-import { add } from "../store/modules/todoReducer";
+import { add,deletedList } from "../store/modules/todoReducer";
 import { useSelector, useDispatch } from "react-redux"
 
 // import store from "../store";
@@ -21,7 +21,10 @@ const Example = () => {
         const deleted = deleteda()
         //変数名とActionCreaterは同じ名前はダメ
         dispatch(deleted)
-
+    }
+    const completedFn = (prev) =>{
+        const deletedListAction = deletedList(prev)
+        dispatch(deletedListAction)
     }
     const arrayTodos = [...newTodos];
     //mapメソッドでエラーが出たため新しい配列に入れ直した。
@@ -32,7 +35,13 @@ const Example = () => {
 
             {arrayTodos.map(prev => {
                 return (
-                    <p key={prev.id}>{prev.content}</p>
+                    <>
+                    <div key={prev.id}>
+                    <button onClick={() => completedFn(prev)}>完了</button>
+                    {/* ↑イベントハンドラに引数を渡すときはcallback関数で */}
+                    <span >{prev.content}</span>
+                    </div>
+                    </>
                 )
             }
             )}
