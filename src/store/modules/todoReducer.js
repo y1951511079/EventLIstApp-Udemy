@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const todoReducer = createSlice({
     name: "todo",
-    initialState: "",
+    initialState: [],
     reducers:{
         add(state,{type,payload}){
            const newTodo = {
@@ -20,9 +20,19 @@ const todoReducer = createSlice({
           }
            )
            return filteredState
+        },
+        edited(state,{type,payload}){
+          //typeを省略しないと上手くpayload読み込めた
+         const {newItem, num} = payload;
+          // console.log(num)
+          // console.log(newItem)
+          const bState = [...state]
+          // console.log(bState)
+          bState.splice(num,1,newItem)
+          return bState
         }
     }
 })
-const { add, deletedList } = todoReducer.actions;
-export { add ,deletedList }
+const { add, deletedList, edited } = todoReducer.actions;
+export { add ,deletedList, edited }
 export default todoReducer.reducer ;
